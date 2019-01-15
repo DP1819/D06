@@ -43,7 +43,8 @@ public class Curriculum extends Ticketable {
 
 	@NotNull
 	@Valid
-	@OneToOne(optional = false, cascade = CascadeType.ALL, mappedBy = "curriculum")
+	@OneToOne(optional = false, cascade = CascadeType.REMOVE)
+	//, cascade = CascadeType.ALL, mappedBy = "curriculum"
 	public PersonalRecord getPersonalRecord() {
 		return this.personalRecord;
 	}

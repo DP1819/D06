@@ -39,5 +39,12 @@
 		</display:column>
 		
 	</display:table>
+	
+	
+	<%--  Boton de ATRAS --%>
+
+	<input type="button" name="back"
+		value="<spring:message code="message.back"></spring:message>"
+		onclick="javascript:relativeRedir('folder/actor/list.do')" />
 
 </jstl:if>

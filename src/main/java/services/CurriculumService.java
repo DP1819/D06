@@ -23,6 +23,7 @@ import domain.ProfessionalRecord;
 @Service
 @Transactional
 public class CurriculumService {
+
 	// Managed repository --------------------------------------
 
 	@Autowired
@@ -33,7 +34,7 @@ public class CurriculumService {
 	@Autowired
 	private TicketableService		ticketableService;
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService		handyWorkerService;
 
 
 	//	@Autowired
@@ -86,6 +87,8 @@ public class CurriculumService {
 		Assert.notNull(curriculum.getHandyWorker());
 		Assert.notNull(curriculum.getPersonalRecord());
 
+		this.curriculumRepository.flush();
+
 		res = this.curriculumRepository.save(curriculum);
 
 		return res;
@@ -125,27 +128,27 @@ public class CurriculumService {
 
 	}
 
-	public Curriculum findByHandyWorker(HandyWorker h) {
+	public Curriculum findByHandyWorker(final HandyWorker h) {
 		Assert.notNull(h);
 		Assert.isTrue(h.getId() > 0);
 		Assert.notNull(this.handyWorkerService.findOne(h.getId()));
 		return this.curriculumRepository.findByHandyWorkerId(h.getId());
 	}
 
-	public Collection<Curriculum> findAllByActor(Actor a) {
+	public Collection<Curriculum> findAllByActor(final Actor a) {
 		Assert.notNull(a);
 		Assert.isTrue(a.getId() > 0);
 		Assert.notNull(this.handyWorkerService.findOne(a.getId()));
-		Collection<Curriculum> res = new ArrayList<Curriculum>();
+		final Collection<Curriculum> res = new ArrayList<Curriculum>();
 		res.add(this.findByHandyWorker(this.handyWorkerService.findOne(a.getId())));
 		return res;
 	}
 
-	public Curriculum create(Actor a) {
+	public Curriculum create(final Actor a) {
 		Assert.notNull(a);
 		Assert.isTrue(a.getId() > 0);
 		Assert.notNull(this.handyWorkerService.findOne(a.getId()));
-		Curriculum res = this.create();
+		final Curriculum res = this.create();
 		res.setHandyWorker(this.handyWorkerService.findOne(a.getId()));
 		return res;
 	}

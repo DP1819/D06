@@ -3,10 +3,7 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -20,16 +17,16 @@ public class PersonalRecord extends DomainEntity {
 
 	//----------Atributos------------
 
-	private String		fullName;
-	private String		photo;
-	private String		email;
-	private String		phone;
-	private String		linkedinProfile;
+	private String	fullName;
+	private String	photo;
+	private String	email;
+	private String	phone;
+	private String	linkedinProfile;
+
 
 	//-------------relaciones--------------
 
-	private Curriculum	curriculum;
-
+	//private Curriculum	curriculum;
 
 	//-----------Getters y Setters------
 
@@ -87,14 +84,14 @@ public class PersonalRecord extends DomainEntity {
 		this.linkedinProfile = linkedinProfile;
 	}
 
-	@Valid
-	@OneToOne(optional = false, cascade = CascadeType.ALL)
-	public Curriculum getCurriculum() {
-		return this.curriculum;
-	}
-
-	public void setCurriculum(final Curriculum curriculum) {
-		this.curriculum = curriculum;
-	}
+	//	@Valid
+	//	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	//	public Curriculum getCurriculum() {
+	//		return this.curriculum;
+	//	}
+	//
+	//	public void setCurriculum(final Curriculum curriculum) {
+	//		this.curriculum = curriculum;
+	//	}
 
 }

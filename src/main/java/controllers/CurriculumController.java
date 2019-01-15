@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.CurriculumService;
+import services.PersonalRecordService;
 import domain.Curriculum;
 import domain.EducationRecord;
 import domain.EndorserRecord;
@@ -32,10 +33,13 @@ public class CurriculumController extends AbstractController {
 	//-----------------Services-------------------------
 
 	@Autowired
-	CurriculumService	curriculumService;
+	CurriculumService		curriculumService;
 
 	@Autowired
-	ActorService		actorService;
+	ActorService			actorService;
+
+	@Autowired
+	PersonalRecordService	personalRecordService;
 
 
 	//-----------------Display-------------------------
@@ -108,7 +112,7 @@ public class CurriculumController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/display", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Curriculum curriculum, final BindingResult binding) {
 		ModelAndView result;
 
@@ -116,14 +120,14 @@ public class CurriculumController extends AbstractController {
 			result = this.createEditModelAndView(curriculum);
 		else
 			try {
+				this.personalRecordService.save(curriculum.getPersonalRecord());
 				this.curriculumService.save(curriculum);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:display.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(curriculum, "curriculum.commit.error");
 			}
 		return result;
 	}
-
 	protected ModelAndView createEditModelAndView(final Curriculum curriculum, final String messageCode) {
 		final ModelAndView result;
 

@@ -28,7 +28,6 @@
 
 			<form:hidden path="id" />
 			<form:hidden path="version" />
-			<form:hidden path="curriculum" />
 
 
 			<fieldset>
@@ -88,11 +87,7 @@
 				<spring:message code="personalRecord.cancel" />
 			</button>
 
-			<jstl:if test="${personalRecord.id != 0}">
-				<input type="submit" name="delete"
-					value="<spring:message code="personalRecord.delete" />"
-					onclick="return confirm('<spring:message code="personalRecord.confirm.delete" />')" />&nbsp;
-			</jstl:if>
+			
 
 		</form:form>
 

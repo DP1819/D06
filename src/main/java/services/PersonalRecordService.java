@@ -37,7 +37,7 @@ public class PersonalRecordService {
 		Curriculum c;
 		c = this.curriculumService.create();
 		pr = new PersonalRecord();
-		pr.setCurriculum(c);
+		//pr.setCurriculum(c);
 		return pr;
 	}
 
@@ -57,16 +57,9 @@ public class PersonalRecordService {
 	public PersonalRecord save(final PersonalRecord p) {
 		Assert.notNull(p);
 		PersonalRecord res;
-		System.out.println("a");
-		System.out.println(p.getFullName());
-		System.out.println(p.getEmail());
-		System.out.println(p.getLinkedinProfile());
-		System.out.println(p.getPhone());
-		System.out.println(p.getPhoto());
-		System.out.println(p.getCurriculum());
+
 		res = this.personalRecordRepository.save(p);
-		System.out.println(p.getFullName());
-		System.out.println("b");
+
 		return res;
 	}
 
@@ -96,7 +89,7 @@ public class PersonalRecordService {
 		Assert.isTrue(dependency.getId() > 0);
 		Assert.notNull(this.curriculumService.findOne(dependency.getId()));
 		final PersonalRecord res = this.create();
-		res.setCurriculum(dependency);
+		//res.setCurriculum(dependency);
 		return res;
 	}
 }

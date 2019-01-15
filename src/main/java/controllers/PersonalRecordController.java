@@ -53,14 +53,12 @@ public class PersonalRecordController extends AbstractController {
 		ModelAndView result;
 		PersonalRecord pr;
 		Curriculum curriculum;
-		HandyWorker handyWorker;
 
-		handyWorker = (HandyWorker) this.actorService.findOneByUserAccount(LoginService.getPrincipal());
-		curriculum = this.curriculumService.findByHandyWorker(handyWorker);
+		curriculum = this.curriculumService.create();
 
 		pr = this.personalRecordService.create();
 
-		pr.setCurriculum(curriculum);
+		//pr.setCurriculum(curriculum);
 
 		result = this.createEditModelAndView(pr);
 
@@ -84,13 +82,22 @@ public class PersonalRecordController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final PersonalRecord personalRecord, final BindingResult binding) {
 		ModelAndView result;
+		Curriculum curriculum;
+		HandyWorker handyWorker;
+
+		handyWorker = (HandyWorker) this.actorService.findOneByUserAccount(LoginService.getPrincipal());
 
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(personalRecord);
 		else
 			try {
-				this.personalRecordService.save(personalRecord);
-				result = new ModelAndView("redirect:list.do");
+
+				curriculum = this.curriculumService.create();
+				final PersonalRecord r = this.personalRecordService.save(personalRecord);
+				curriculum.setPersonalRecord(r);
+				curriculum.setHandyWorker(handyWorker);
+				this.curriculumService.save(curriculum);
+				result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(personalRecord, "personalRecord.commit.error");
 			}
@@ -119,19 +126,6 @@ public class PersonalRecordController extends AbstractController {
 
 		result = this.createEditModelAndView(personalRecord, null);
 
-		return result;
-	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final PersonalRecord personalRecord, final BindingResult binding) {
-		ModelAndView result;
-		try {
-			this.personalRecordService.delete(personalRecord);
-			result = new ModelAndView("redirect:list.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(personalRecord, "personalRecord.commit.error");
-
-		}
 		return result;
 	}
 

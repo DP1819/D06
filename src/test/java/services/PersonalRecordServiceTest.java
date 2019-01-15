@@ -1,7 +1,7 @@
+
 package services;
 
 import java.util.Collection;
-
 
 import javax.transaction.Transactional;
 
@@ -15,15 +15,13 @@ import org.springframework.util.Assert;
 import utilities.AbstractTest;
 import domain.PersonalRecord;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
+public class PersonalRecordServiceTest extends AbstractTest {
 
-public class PersonalRecordServiceTest extends AbstractTest{
-	
 	//Service under test ----------------------------------------
 
 	@Autowired
@@ -83,11 +81,11 @@ public class PersonalRecordServiceTest extends AbstractTest{
 		pr = this.personalRecordService.findOne(erId);
 		Assert.notNull(pr);
 
-		pr.setCurriculum(null);
+		//pr.setCurriculum(null);
 		saved = this.personalRecordService.save(pr);
 		Assert.isNull(saved);
 	}
-	
+
 	@Test
 	public void deleteTestCorrecto() {
 		PersonalRecord pr;
@@ -109,6 +107,5 @@ public class PersonalRecordServiceTest extends AbstractTest{
 		this.personalRecordService.delete(pr);
 		Assert.isNull(pr = this.personalRecordService.findOne(erId));
 	}
-
 
 }

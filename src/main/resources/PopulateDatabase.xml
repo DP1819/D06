@@ -2296,7 +2296,7 @@
 		<property name="email" value="elgrinch@hotmail.com"></property>
 		<property name="phone" value="+34(456)123456722"></property>
 		<property name="linkedinProfile" value="https://www.linkedin.com/company/grinch.spielverderber"></property>	
-		<property name="curriculum" ref="curriculum1" />	
+		<!-- <property name="curriculum" ref="curriculum1" /> -->	
 	</bean>
  
  	<bean id="personalRecord2" class="domain.PersonalRecord">
@@ -2305,7 +2305,7 @@
 		<property name="email" value="pokeluisito@hotmail.com"></property>
 		<property name="phone" value="+34(456)123456721"></property>
 		<property name="linkedinProfile" value="https://www.linkedin.com/company/grinch.spielverderber"></property>
-		<property name="curriculum" ref="curriculum2" />
+		<!-- <property name="curriculum" ref="curriculum2" /> -->
 	</bean>
  
  	<bean id="personalRecord3" class="domain.PersonalRecord">
@@ -2314,7 +2314,7 @@
 		<property name="email" value="camunon@hotmail.com"></property>
 		<property name="phone" value="+34(456)123456720"></property>
 		<property name="linkedinProfile" value="https://www.linkedin.com/company/grinch.spielverderber"></property>
-		<property name="curriculum" ref="curriculum3" />
+		<!-- <property name="curriculum" ref="curriculum3" /> -->
 	</bean>	
  
  	<bean id="personalRecord4" class="domain.PersonalRecord">
@@ -2323,7 +2323,7 @@
 		<property name="email" value="tobi@hotmail.com"></property>
 		<property name="phone" value="+34(456)123456719"></property>
 		<property name="linkedinProfile" value="https://www.linkedin.com"></property>
-		<property name="curriculum" ref="curriculum4" />
+		<!-- <property name="curriculum" ref="curriculum4" /> -->
 	</bean>
  
  	<bean id="curriculum1" class="domain.Curriculum">
@@ -2344,6 +2344,7 @@
 		</property>
 		<property name="miscellaneousRecords">
 			<list>
+		
 			</list>
 		</property>
 	</bean>
