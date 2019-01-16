@@ -67,6 +67,16 @@
 		<property name="suspicious" value="false" />
 		<property name="userAccount" ref="userAccount1" />
 	</bean>
+	
+	<bean id="system" class="domain.Administrator">
+		<property name="name" value="System" />
+		<property name="middleName" value="System" />
+		<property name="surname" value="System" />
+		<property name="email" value="system@system.sys" />
+		<property name="address" value="C/System, 32" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccountSystem" />
+	</bean>
 
 	
 
