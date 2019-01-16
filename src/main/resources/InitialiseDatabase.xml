@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2018 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
+
+	<!-- Date formats -->
+
+	<bean id="completeDateFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg value="dd/MM/yyyy HH:mm:ss" />
+	</bean>
+
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
-		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="username" value="admin1" />
+		<property name="password" value="e00cf25ad42683b3df678c61f42c6bda" />
+		<property name="banned" value="false" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -29,7 +30,422 @@
 			</list>
 		</property>
 	</bean>
+
+	<!-- La contraseña de system es intencional, no se puede acceder a esta 
+		cuenta -->
+
+	<bean id="userAccountSystem" class="security.UserAccount">
+		<property name="username" value="system" />
+		<property name="password" value="system" />
+		<property name="banned" value="false" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
 	
-	<!-- Other domain beans come here -->	
+
+
+
+	<!-- Other domain beans come here -->
+
+	<!-- Administrators -->
+
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Mario" />
+		<property name="middleName" value="Xavier" />
+		<property name="surname" value="García" />
+		<property name="photo"
+			value="https://cdn.pixabay.com/photo/2017/06/26/02/47/people-2442565_960_720.jpg" />
+		<property name="email" value="maxagar@gmail.com" />
+		<property name="phone" value="+34(456)123456789" />
+		<property name="address" value="C/Calle, 32" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount1" />
+	</bean>
+
+	
+
+	<!-- Application -->
+
+	
+
+	<!-- Categories -->
+
+	<bean id="categoryRoot" class="domain.Category">
+		<property name="nameEnglish" value="CATEGORY" />
+		<property name="nameSpanish" value="CATEGORÍA" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryCarpentry" class="domain.Category">
+		<property name="nameEnglish" value="Carpentry" />
+		<property name="nameSpanish" value="Carpintería" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryCeilingRepair" class="domain.Category">
+		<property name="nameEnglish" value="CeilingRepair" />
+		<property name="nameSpanish" value="Reparación de techos" />
+		<property name="parentCategory" ref="categoryConcreteWork" />
+	</bean>
+
+	<bean id="categoryCleaning" class="domain.Category">
+		<property name="nameEnglish" value="Cleaning" />
+		<property name="nameSpanish" value="Limpieza" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryConcreteWork" class="domain.Category">
+		<property name="nameEnglish" value="ConcreteWork" />
+		<property name="nameSpanish" value="Trabajos con hormigón" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryDoors" class="domain.Category">
+		<property name="nameEnglish" value="Doors" />
+		<property name="nameSpanish" value="Puertas" />
+		<property name="parentCategory" ref="categoryCarpentry" />
+	</bean>
+
+	<bean id="categoryElectricalWiring" class="domain.Category">
+		<property name="nameEnglish" value="ElectricalWiring" />
+		<property name="nameSpanish" value="Cableado Eléctrico" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryFanInstallation" class="domain.Category">
+		<property name="nameEnglish" value="FanInstallation" />
+		<property name="nameSpanish" value="Instalación de ventiladores" />
+		<property name="parentCategory" ref="categoryElectricalWiring" />
+	</bean>
+
+	<bean id="categoryFenceFixing" class="domain.Category">
+		<property name="nameEnglish" value="FenceFixing" />
+		<property name="nameSpanish" value="Reparación de vallas" />
+		<property name="parentCategory" ref="categoryHomeSecuritySystems" />
+	</bean>
+
+	<bean id="categoryHomeSecuritySystems" class="domain.Category">
+		<property name="nameEnglish" value="HomeSecuritySystems" />
+		<property name="nameSpanish" value="Sistemas de seguridad para el hogar" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryInsulationInstallation" class="domain.Category">
+		<property name="nameEnglish" value="InsulationInstallation" />
+		<property name="nameSpanish" value="Instalación de aislamiento" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryLampRepairs" class="domain.Category">
+		<property name="nameEnglish" value="LampRepairs" />
+		<property name="nameSpanish" value="Reparación de lámparas" />
+		<property name="parentCategory" ref="categoryElectricalWiring" />
+	</bean>
+
+	<bean id="categoryMoving" class="domain.Category">
+		<property name="nameEnglish" value="Moving" />
+		<property name="nameSpanish" value="Mudanzas" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryPainting" class="domain.Category">
+		<property name="nameEnglish" value="Painting" />
+		<property name="nameSpanish" value="Pintado" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryPestControl" class="domain.Category">
+		<property name="nameEnglish" value="PestControl" />
+		<property name="nameSpanish" value="Control de plagas" />
+		<property name="parentCategory" ref="categoryCleaning" />
+	</bean>
+
+	<bean id="categoryPlumbingRepairs" class="domain.Category">
+		<property name="nameEnglish" value="PlumbingRepairs" />
+		<property name="nameSpanish" value="Reparación de tuberías" />
+		<property name="parentCategory" ref="categoryRoot" />
+	</bean>
+
+	<bean id="categoryRoofing" class="domain.Category">
+		<property name="nameEnglish" value="Roofing" />
+		<property name="nameSpanish" value="Techado" />
+		<property name="parentCategory" ref="categoryConcreteWork" />
+	</bean>
+
+	<bean id="categoryShelfInstallation" class="domain.Category">
+		<property name="nameEnglish" value="ShelfInstallation" />
+		<property name="nameSpanish" value="Instalación de estanterías" />
+		<property name="parentCategory" ref="categoryCarpentry" />
+	</bean>
+
+	<bean id="categorySolarPanels" class="domain.Category">
+		<property name="nameEnglish" value="SolarPanels" />
+		<property name="nameSpanish" value="Paneles Solares" />
+		<property name="parentCategory" ref="categoryElectricalWiring" />
+	</bean>
+
+	<bean id="categorySoundProofing" class="domain.Category">
+		<property name="nameEnglish" value="SoundProofing" />
+		<property name="nameSpanish" value="Amortiguación de sonido" />
+		<property name="parentCategory" ref="categoryInsulationInstallation" />
+	</bean>
+
+	<bean id="categorySprinklerRepair" class="domain.Category">
+		<property name="nameEnglish" value="SprinklerRepair" />
+		<property name="nameSpanish" value="Reparación de aspersores" />
+		<property name="parentCategory" ref="categoryElectricalWiring" />
+	</bean>
+
+	<bean id="categoryWindowRepair" class="domain.Category">
+		<property name="nameEnglish" value="WindowRepair" />
+		<property name="nameSpanish" value="Reparación de ventanas" />
+		<property name="parentCategory" ref="categoryCarpentry" />
+	</bean>
+
+	
+	
+	<!-- Complaints -->
+
+	
+
+	<!-- ___________________Customers___________________________________ -->
+	
+
+	<!-- Referee -->
+
+
+
+	<!-- ___________________Reports___________________________________ -->
+
+	
+	<!-- ___________________Finders __________________________________ -->
+
+	
+
+	
+
+	<!-- ___________________Endorsement__________________________________ -->
+	
+
+	<!-- Sponsor -->
+
+	
+
+	<!-- Sponsorships -->
+
+
+	
+
+	<!-- Tutorial -->
+
+	
+
+
+	<!-- WorkPlan -->
+
+
+
+
+	<!--____________ FixupTask_________________________________ -->
+
+	
+
+
+	<!-- Warranties -->
+
+
+	
+
+	<!-- __________________________________ FOLDER _________________________________ -->
+
+	<!-- Folders del sistema -->
+
+
+	<bean id="inboxSystem" class="domain.Folder">
+		<property name="name" value="inBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="inboxSystem" />
+		<property name="actor" ref="system" />
+	</bean>
+
+	<bean id="outboxSystem" class="domain.Folder">
+		<property name="name" value="outBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="outboxSystem" />
+		<property name="actor" ref="system" />
+	</bean>
+
+
+	<bean id="trashboxSystem" class="domain.Folder">
+		<property name="name" value="trashBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="trashboxSystem" />
+		<property name="actor" ref="system" />
+	</bean>
+
+
+	<bean id="spamboxSystem" class="domain.Folder">
+		<property name="name" value="spamBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="spamboxSystem" />
+		<property name="actor" ref="system" />
+	</bean>
+
+
+
+	<!-- folders del administrator1 -->
+
+	<bean id="folder1Administrator1" class="domain.Folder">
+		<property name="name" value="inBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="folder1Administrator1" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="folder2Administrator1" class="domain.Folder">
+		<property name="name" value="outBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="folder2Administrator1" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="folder3Administrator1" class="domain.Folder">
+		<property name="name" value="trashBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="folder3Administrator1" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+
+	<bean id="folder4Administrator1" class="domain.Folder">
+		<property name="name" value="spamBox" />
+		<property name="system" value="true" />
+		<property name="parentFolder" ref="folder4Administrator1" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+
+
+
+	
+
+
+	<!-- __________________________Settings_______________________________________________ -->
+
+	<bean id="settings1" class="domain.Settings">
+		<property name="systemName" value="Acme Handy Worker"></property>
+		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo"></property>
+		<property name="welcomeMessageEnglish"
+			value="Welcome to Acme Handy Worker! Price, quality, and trust in a single place"></property>
+		<property name="welcomeMessageSpanish"
+			value="¡Bienvenidos a Acme Handy Worker! Precio, calidad y confianza en el mismo sitio"></property>
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you've been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+			</list>
+		</property>
+		<property name="vat" value="21"></property>
+		<property name="countryCode" value="+34"></property>
+		<property name="creditCardMakes">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>DINNERS</value>
+				<value>AMEX</value>
+			</list>
+		</property>
+		<property name="finderCacheHours" value="1"></property>
+		<property name="maxCacheResults" value="10"></property>
+		<property name="positiveWords">
+			<list>
+				<value>good</value>
+				<value>fantastic</value>
+				<value>excellent</value>
+				<value>great</value>
+				<value>amazing</value>
+				<value>terrific</value>
+				<value>beautiful</value>
+				<value>bueno</value>
+				<value>fantástico</value>
+				<value>buena</value>
+				<value>fantástica</value>
+				<value>excelente</value>
+				<value>gran</value>
+				<value>increíble</value>
+				<value>terrorífico</value>
+				<value>hermoso</value>
+				<value>terrorífica</value>
+				<value>hermosa</value>
+			</list>
+		</property>
+		<property name="negativeWords">
+			<list>
+				<value>not</value>
+				<value>bad</value>
+				<value>horrible</value>
+				<value>average</value>
+				<value>disaster</value>
+				<value>no</value>
+				<value>malo</value>
+				<value>mala</value>
+				<value>horrible</value>
+				<value>mediocre</value>
+				<value>desastre</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- _______________________________SocialProfile________________________________________________ -->
+
+
+	<bean id="socialProfile1Admin1" class="domain.SocialProfile">
+		<property name="nick" value="Manolete4"></property>
+		<property name="networkName" value="Twitter"></property>
+		<property name="actor" ref="administrator1" />
+		<property name="profile" value="https://profile.es/"></property>
+	</bean>
+
+	<bean id="socialProfile2Admin1" class="domain.SocialProfile">
+		<property name="nick" value="Manolete5"></property>
+		<property name="networkName" value="Twitter"></property>
+		<property name="actor" ref="administrator1" />
+		<property name="profile" value="https://profile.es/"></property>
+	</bean>
+
+	
+
+	<!-- _______________________________________HANDYWORKER ______________________________________________ -->
+
+
+	
+
+
+
+	<!--__________________________MESSAGES _________________________________ -->
+
+
+
+
+	
+
+	<!-- ______________________________NOTE______________________________________ -->
+
+
+	
+
 	
 </beans>
