@@ -16,7 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<%
+<%-- <%
 
 String languageMessage = "en";
 
@@ -49,6 +49,7 @@ if(request.getParameter("language") != null) {
 		<p>${englishWelcome}</p>
 	<% } if(languageMessage.equals("es")) { %>
 		<p>${spanishWelcome}</p>
-	<% } %>
-
+	<% } %> --%>
+	
+<%-- <p>${englishWelcome}</p> --%>
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
